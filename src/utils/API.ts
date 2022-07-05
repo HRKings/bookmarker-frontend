@@ -2,7 +2,7 @@ import IBookmark from '@/types/IBookmark';
 import ICategory from '@/types/ICategory';
 import IPaginated from '@/types/IPaginated';
 
-const API_BASE_URL = 'http://localhost:5139/api/v1';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export async function api(path: string, method: 'POST' | 'GET' | 'PUT' | 'DELETE', body?: any): Promise<Response> {
   return fetch(`${API_BASE_URL}/${path}`, {
