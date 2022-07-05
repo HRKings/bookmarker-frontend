@@ -9,11 +9,11 @@ import BookmarkGrid from '@/components/Bookmark/BookmarkGrid.vue';
 const currentPage = ref(1);
 
 const loading = ref(true);
-const bookmarks = ref<IPaginated<IBookmark>>(await getAllBookmarksPaginated(currentPage.value, 10));
+const bookmarks = ref<IPaginated<IBookmark> | undefined>(await getAllBookmarksPaginated(currentPage.value, 10));
 loading.value = false;
 
 async function nextPage() {
-  if (!bookmarks.value.hasNext) return;
+  if (!bookmarks.value?.hasNext ?? true) return;
 
   currentPage.value += 1;
 
@@ -45,7 +45,7 @@ async function reloadBookmars() {
     <div>
       <router-link to="/">Home</router-link>
       <button type="button" @click="previousPage">Previous</button>
-      <span>{{ currentPage }} / {{ bookmarks.totalPages }}</span>
+      <span>{{ currentPage }} / {{ bookmarks?.totalPages }}</span>
       <button type="button" @click="nextPage">Next</button>
       <button type="button" @click="reloadBookmars">Reload</button>
       <BookmarkGrid :bookmarks="bookmarks" :loading="loading"/>
